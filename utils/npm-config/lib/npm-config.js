@@ -71,6 +71,22 @@ class NpmConfig extends Config {
     };
   }
 
+  get color() {
+    // NOTE: Any attempt to call `this.get()` _before_
+    // `this.load()` has completed will throw an error.
+    const color = this.get("color");
+
+    if (color === "always") {
+      return true;
+    }
+
+    if (color === false) {
+      return false;
+    }
+
+    return process.stdout.isTTY;
+  }
+
   get command() {
     return this.cliConfig.lernaCommand ? `lerna ${this.cliConfig.lernaCommand}` : this.cliConfig.npmCommand;
   }
@@ -94,10 +110,6 @@ class NpmConfig extends Config {
    */
   async load() {
     await super.load();
-
-    const color = this.get("color");
-    /* eslint-disable-next-line no-nested-ternary */
-    this.color = color === "always" ? true : color === false ? false : process.stdout.isTTY;
 
     const umask = this.get("umask");
     this.modes = {

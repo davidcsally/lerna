@@ -20,7 +20,7 @@ Object {
   "call": "",
   "cert": null,
   "cidr": null,
-  "color": true,
+  "color": false,
   "commitHooks": true,
   "defaultTag": "latest",
   "depth": null,
